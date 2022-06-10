@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "../libs/Math.sol";
+// import "hardhat/console.sol";
 
 pragma solidity ^0.8.2;
 
@@ -26,7 +27,7 @@ contract Vpool is Context {
     uint constant Precision = 1 ether;
 
     constructor(uint256 maxAnchor, address anchor, address token) {
-        _curLevel = 1;
+        _curLevel = 0;
         _leftToken = 0;
         _totalToken = 0;
         _maxAnchor = maxAnchor;
@@ -77,15 +78,23 @@ contract Vpool is Context {
             _leftToken = _curLevel * _maxAnchor;
             _totalToken -= exchangedToken;
             _token.transfer(_msgSender(), exchangedToken * Precision);
-        } else {
+        } else {  // amount > anchorRequired
             uint256 totalTokenBefore = _totalToken;
             uint256 belowAmount = amount - anchorRequired;
             uint256 levelsDeposited = belowAmount / _maxAnchor;
             uint256 curAnchorDeposited = belowAmount % _maxAnchor;
-            _curLevel = _curLevel - 1 - levelsDeposited;
-            _leftToken = _curLevel * (_maxAnchor - curAnchorDeposited);
-            _totalToken = getTokenByFullLevel(_curLevel-1) + _leftToken;
-            _token.transfer(_msgSender(), (totalTokenBefore - _totalToken) * Precision);
+
+            if (_curLevel <= 1 + levelsDeposited) {
+                _curLevel = 0;
+                _leftToken = 0;
+                _totalToken = 0;
+                _token.transfer(_msgSender(), totalTokenBefore);
+            } else {
+                _curLevel = _curLevel - 1 - levelsDeposited;
+                _leftToken = _curLevel * (_maxAnchor - curAnchorDeposited);
+                _totalToken = getTokenByFullLevel(_curLevel-1) + _leftToken;
+                _token.transfer(_msgSender(), (totalTokenBefore - _totalToken) * Precision);
+            }
         }
     }
 

@@ -53,7 +53,7 @@ describe("Token contract", function () {
   });
 
   // You can nest describe calls to create subsections.
-  describe("Math check", function () {
+  describe("Vpool Math check", function () {
     // `it` is another Mocha function. This is the one you use to define your
     // tests. It receives the test name, and a callback function.
 
@@ -92,6 +92,29 @@ describe("Token contract", function () {
         // console.log(await berus.balanceOf(owner.address));
         expect(await vpool.getCurLevel()).to.equal(54770);
         expect(await vpool.getLeftToken()).to.equal(54770000);
+    });
+
+    it("depositAnchor() underflow math check", async function () {
+        await berus.safeMint(owner.address, 10000000);
+        // unlimited approve of berus _approve(owner, vpool, maxint)
+        await berus.approve(vpool.address, ethers.constants.MaxUint256);
+        await vpool.insertToken(ethers.utils.parseEther("20000"));
+        console.log(await vpool.getCurLevel());
+        console.log(await vpool.getLeftToken());
+        console.log(await vpool.getTotalToken());
+
+        await cdoge.safeMint(owner.address, 1_000_000_000);
+        // unlimited approve of doge _approve(owner, vpool, maxint)
+        await cdoge.approve(vpool.address, ethers.constants.MaxUint256);
+        await vpool.depositAnchor(ethers.utils.parseEther("1000000"));
+        console.log(await vpool.getCurLevel());
+        console.log(await vpool.getLeftToken());
+        console.log(await vpool.getTotalToken());
+
+        await vpool.insertToken(ethers.utils.parseEther("5000000"));
+        console.log(await vpool.getCurLevel());
+        console.log(await vpool.getLeftToken());
+        console.log(await vpool.getTotalToken());
     });
 
   });
