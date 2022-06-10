@@ -110,11 +110,35 @@ describe("Token contract", function () {
         console.log(await vpool.getCurLevel());
         console.log(await vpool.getLeftToken());
         console.log(await vpool.getTotalToken());
+        expect(await vpool.getTotalToken()).to.equal(0);
 
         await vpool.insertToken(ethers.utils.parseEther("5000000"));
         console.log(await vpool.getCurLevel());
         console.log(await vpool.getLeftToken());
         console.log(await vpool.getTotalToken());
+    });
+
+    it("withdraw owner check", async function () {
+        await berus.safeMint(owner.address, 10000000);
+        // unlimited approve of berus _approve(owner, vpool, maxint)
+        await berus.approve(vpool.address, ethers.constants.MaxUint256);
+        await vpool.insertToken(ethers.utils.parseEther("20000"));
+        console.log(await vpool.getCurLevel());
+        console.log(await vpool.getLeftToken());
+        console.log(await vpool.getTotalToken());
+
+        await cdoge.safeMint(addr1.address, 1_000_000_000);
+        // unlimited approve of doge _approve(owner, vpool, maxint)
+        await cdoge.connect(addr1).approve(vpool.address, ethers.constants.MaxUint256);
+        await vpool.connect(addr1).depositAnchor(ethers.utils.parseEther("100"));
+        console.log(await vpool.getCurLevel());
+        console.log(await vpool.getLeftToken());
+        console.log(await vpool.getTotalToken());
+
+        // await vpool.connect(addr1).withdraw(100); //ERROR!
+        await vpool.withdraw(ethers.utils.parseEther("100"));
+        expect(await cdoge.balanceOf(vpool.address)).to.equal(0);
+        expect(await cdoge.balanceOf(owner.address)).to.equal(ethers.utils.parseEther("100"));
     });
 
   });

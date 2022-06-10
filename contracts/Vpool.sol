@@ -9,7 +9,7 @@ import "../libs/Math.sol";
 
 pragma solidity ^0.8.2;
 
-contract Vpool is Context {
+contract Vpool is Context, Ownable {
     // current level of Vpool
     uint256 private _curLevel;
 
@@ -39,6 +39,7 @@ contract Vpool is Context {
     function insertToken(uint256 amount) external {
         amount = amount / Precision;
         require(amount > 0, "have to insert more than 1");
+        require(_token.allowance(_msgSender(), address(this)) >= amount * Precision, "Approve first!");
 
         _token.transferFrom(_msgSender(), address(this), amount * Precision);
         _totalToken += amount;
@@ -60,6 +61,7 @@ contract Vpool is Context {
     function depositAnchor(uint256 amount) external {
         amount = amount / Precision;
         require(amount > 0, "have to insert more than 1");
+        require(_anchor.allowance(_msgSender(), address(this)) >= amount * Precision, "Approve first!");
 
         _anchor.transferFrom(_msgSender(), address(this), amount * Precision);
         // anchor required to clean the current level
@@ -125,5 +127,9 @@ contract Vpool is Context {
 
     function getMaxAnchor() external view returns (uint256) {
         return _maxAnchor;
+    }
+
+    function withdraw(uint256 amount) onlyOwner external {
+        _anchor.transfer(_msgSender(), amount);
     }
 }
