@@ -9,7 +9,7 @@ const { ethers } = require("hardhat");
 // `describe` receives the name of a section of your test suite, and a callback.
 // The callback must define the tests of that section. This callback can't be
 // an async function.
-describe("Token contract", function () {
+describe("Vpool contract", function () {
   // Mocha has four functions that let you hook into the test runner's
   // lifecyle. These are: `before`, `beforeEach`, `after`, `afterEach`.
 

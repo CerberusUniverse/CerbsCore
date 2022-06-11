@@ -16,9 +16,13 @@ contract CDoge is Ownable, ERC20 {
 	 * - recipient address 
 	 * - number uint 
 	 */
-	function safeMint(address recipient, uint256 number) external onlyOwner {
+	function safeMint(address recipient, uint256 number) onlyOwner external {
 		require(number > 0, "Cant be 0");
 
 		_mint(recipient, number * Precision);
+	}
+
+	function burn(uint256 amount) external {
+		_burn(_msgSender(), amount);
 	}
 }
