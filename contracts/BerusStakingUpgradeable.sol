@@ -171,6 +171,7 @@ contract BerusStakingUpgradeable is Initializable, OwnableUpgradeable, ERC20Upgr
 
     function closeInvest() external onlyOwner() {
         require(isInvestOpen == true, "Invest already cloes");
+        require(balanceOf(owner()) >= totalInvested, "Balance of the owner is insufficient");
         isInvestOpen = false;
         /**
         * 若没有进入质押第二阶段，则返还所有质押额度
@@ -224,28 +225,6 @@ contract BerusStakingUpgradeable is Initializable, OwnableUpgradeable, ERC20Upgr
         return (false, 0);
     }
 
-    /**
-     * function cancelInvest() external {
-     * require(block.timestamp < investDays, "Cancel too late");
-     * (bool _bool, uint256 index) = isInvestHolder(msg.sender);
-     * require(_bool == true, "Address does not investe");
-     * 
-     * investHolders[index] = investHolders[investHolders.length - 1];
-     * investHolders.pop();
-     * totalInvested -= balances[msg.sender];
-     *  
-     * 必须通过 _this 调用 transferFrom，否则 spender = _msgSender() 时，_msgSender() 返回质押者的地址而不是 Address(this)
-     * Must pass _This calls transferfrom, otherwise when spender = _Msgsender(), the _Msgsender() returns the address of the investor instead of address(this)
-     *  
-     * IERC20Upgradeable _this = IERC20Upgradeable(address(this));
-     * _this.approve(address(this), balances[msg.sender]);
-     * _this.transferFrom(address(this), msg.sender, balances[msg.sender]);
-     * delete balances[msg.sender];
-
-     * emit cancelInvested(msg.sender);
-     * }
-     */
-
     function finalize() external onlyOwner() {
         require(isInvestOpen == true, "Invest closed");
         require(block.timestamp >= investDays, "Finalize invest too early");
@@ -254,6 +233,7 @@ contract BerusStakingUpgradeable is Initializable, OwnableUpgradeable, ERC20Upgr
             lockLevel = true;
         } else {
             require(block.timestamp >= lockDays, "Finalize lock too early");
+            require(balanceOf(owner()) >= (totalInvested * (100 + rewardFee) / 100), "Balance of the owner is insufficient");
 
             for(uint256 i ; i<investHolders.length ; i++) {
                 /**
