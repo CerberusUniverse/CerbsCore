@@ -1,6 +1,6 @@
 # CerbsCore
 
-Cerberus is an open source dogecoin Web3&EVM infrastructure, designed for the multi-chain dogeverse
+Cerberus is an open source dogecoin Web69&EVM infrastructure, designed for the multi-chain dogeverse
 
 <https://twitter.com/cerbsorg>
 

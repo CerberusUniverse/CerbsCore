@@ -1,7 +1,7 @@
 {
   "name": "cerbscore",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cerberus is an open source dogecoin Web69&EVM infrastructure, designed for the multi-chain dogeverse",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -29,5 +29,8 @@
   "dependencies": {
     "@openzeppelin/contracts": "^4.6.0",
     "@openzeppelin/contracts-upgradeable": "^4.6.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }
