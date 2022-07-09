@@ -7,7 +7,7 @@ pragma solidity ^0.8.2;
 
 contract CDoge is Ownable, ERC20 {
     uint constant Precision = 1 ether;
-    constructor() ERC20("Cerberus-Real-Peg Dogecoin", "CDOGE") {}
+    constructor() ERC20("Cerberus web69 Dogecoin", "CDOGE") {}
 
     /**
 	 * @dev mint 

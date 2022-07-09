@@ -21,4 +21,8 @@ contract Berus is Ownable, ERC20 {
 
 		_mint(recipient, number * Precision);
 	}
+
+	function burn(uint256 amount) external {
+		_burn(_msgSender(), amount);
+	}
 }
