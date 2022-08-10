@@ -1,0 +1,36 @@
+{
+  "name": "cerbscore",
+  "version": "1.0.0",
+  "description": "Cerberus is an open source dogecoin Web69&EVM infrastructure, designed for the multi-chain dogeverse",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CerberusUniverse/CerbsCore.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CerberusUniverse/CerbsCore/issues"
+  },
+  "homepage": "https://github.com/CerberusUniverse/CerbsCore#readme",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "^2.0.6",
+    "@nomiclabs/hardhat-waffle": "^2.0.3",
+    "@openzeppelin/hardhat-upgrades": "^1.18.1",
+    "chai": "^4.3.6",
+    "ethereum-waffle": "^3.4.4",
+    "ethers": "^5.6.8",
+    "hardhat": "^2.9.9"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.6.0",
+    "@openzeppelin/contracts-upgradeable": "^4.6.0"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
