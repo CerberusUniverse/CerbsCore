@@ -1,17 +1,30 @@
+<<<<<<< HEAD
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.2;
 
+=======
+// contracts/Vpool.sol
+// SPDX-License-Identifier: MIT
+>>>>>>> 0a13fbd49f9e70cd1cf1ec0042d61872ef3e8d86
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "../libs/Math.sol";
+<<<<<<< HEAD
 
 contract Vpool is Context, Ownable {
     event e_insertToken(uint256 amount);
     event e_depositAnchor(address msgsender, uint256 amount);
     event e_withdraw(uint256 amount);
 
+=======
+// import "hardhat/console.sol";
+
+pragma solidity ^0.8.2;
+
+contract Vpool is Context, Ownable {
+>>>>>>> 0a13fbd49f9e70cd1cf1ec0042d61872ef3e8d86
     // current level of Vpool
     uint256 private _curLevel;
 
@@ -57,8 +70,11 @@ contract Vpool is Context, Ownable {
             // put left token to current level
             _curLevel = fullLevel + 1;
         }
+<<<<<<< HEAD
 
         emit e_insertToken(amount);
+=======
+>>>>>>> 0a13fbd49f9e70cd1cf1ec0042d61872ef3e8d86
     }
 
     // deposit anchor to Vpool to exchange token
@@ -94,7 +110,11 @@ contract Vpool is Context, Ownable {
                 _curLevel = 0;
                 _leftToken = 0;
                 _totalToken = 0;
+<<<<<<< HEAD
                 _token.transfer(_msgSender(), totalTokenBefore * Precision);
+=======
+                _token.transfer(_msgSender(), totalTokenBefore);
+>>>>>>> 0a13fbd49f9e70cd1cf1ec0042d61872ef3e8d86
             } else {
                 _curLevel = _curLevel - 1 - levelsDeposited;
                 _leftToken = _curLevel * (_maxAnchor - curAnchorDeposited);
@@ -102,8 +122,11 @@ contract Vpool is Context, Ownable {
                 _token.transfer(_msgSender(), (totalTokenBefore - _totalToken) * Precision);
             }
         }
+<<<<<<< HEAD
 
         emit e_depositAnchor(msg.sender, amount);
+=======
+>>>>>>> 0a13fbd49f9e70cd1cf1ec0042d61872ef3e8d86
     }
 
     function getLevelByTotalToken(uint256 totalToken) public view returns (uint256) {
@@ -137,7 +160,10 @@ contract Vpool is Context, Ownable {
 
     function withdraw(uint256 amount) onlyOwner external {
         _anchor.transfer(_msgSender(), amount);
+<<<<<<< HEAD
 
         emit e_withdraw(amount);
+=======
+>>>>>>> 0a13fbd49f9e70cd1cf1ec0042d61872ef3e8d86
     }
 }

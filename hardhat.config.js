@@ -3,6 +3,7 @@ require('@nomiclabs/hardhat-ethers');
 require('@openzeppelin/hardhat-upgrades');
 
 module.exports = {
+<<<<<<< HEAD
   defaultNetwork: "bsc",
   networks: {
     bsc: {
@@ -29,4 +30,7 @@ module.exports = {
       }
     }
   }
+=======
+  solidity: "0.8.2",
+>>>>>>> 0a13fbd49f9e70cd1cf1ec0042d61872ef3e8d86
 };
