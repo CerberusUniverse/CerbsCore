@@ -91,6 +91,10 @@ contract CerberusNFTMarket is IERC721Receiver {
         Owner = msg.sender;
     }
 
+    function fetchOwner() external view returns (address) {
+        return Owner;
+    }
+
     function fetchShutdown() external view returns (bool) {
         return Should;
     }
