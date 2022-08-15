@@ -7,7 +7,7 @@ module.exports = {
   networks: {
     bsc: {
       url: 'https://bsc-dataseed1.defibit.io/',
-      accounts: ['13578e74c554e124e979c88d209991512c1b79c3fcf2219238c0e2359345d815'],
+      accounts: [''],
     },
   },
   solidity: {
