@@ -1,15 +1,17 @@
-// contracts/Vpool.sol
 // SPDX-License-Identifier: MIT
+pragma solidity ^0.8.2;
+
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "../libs/Math.sol";
-// import "hardhat/console.sol";
-
-pragma solidity ^0.8.2;
 
 contract Vpool is Context, Ownable {
+    event e_insertToken(uint256 amount);
+    event e_depositAnchor(address msgsender, uint256 amount);
+    event e_withdraw(uint256 amount);
+
     // current level of Vpool
     uint256 private _curLevel;
 
@@ -36,7 +38,7 @@ contract Vpool is Context, Ownable {
     }
 
     // deposit token to Vpool
-    function insertToken(uint256 amount) external {
+    function insertToken(uint256 amount) external returns (bool) {
         amount = amount / Precision;
         require(amount > 0, "have to insert more than 1");
         require(_token.allowance(_msgSender(), address(this)) >= amount * Precision, "Approve first!");
@@ -55,10 +57,14 @@ contract Vpool is Context, Ownable {
             // put left token to current level
             _curLevel = fullLevel + 1;
         }
+
+        emit e_insertToken(amount);
+
+        return true;
     }
 
     // deposit anchor to Vpool to exchange token
-    function depositAnchor(uint256 amount) external {
+    function depositAnchor(uint256 amount) external returns (bool) {
         amount = amount / Precision;
         require(amount > 0, "have to insert more than 1");
         require(_anchor.allowance(_msgSender(), address(this)) >= amount * Precision, "Approve first!");
@@ -90,7 +96,7 @@ contract Vpool is Context, Ownable {
                 _curLevel = 0;
                 _leftToken = 0;
                 _totalToken = 0;
-                _token.transfer(_msgSender(), totalTokenBefore);
+                _token.transfer(_msgSender(), totalTokenBefore * Precision);
             } else {
                 _curLevel = _curLevel - 1 - levelsDeposited;
                 _leftToken = _curLevel * (_maxAnchor - curAnchorDeposited);
@@ -98,6 +104,10 @@ contract Vpool is Context, Ownable {
                 _token.transfer(_msgSender(), (totalTokenBefore - _totalToken) * Precision);
             }
         }
+
+        emit e_depositAnchor(msg.sender, amount);
+
+        return true;
     }
 
     function getLevelByTotalToken(uint256 totalToken) public view returns (uint256) {
@@ -129,7 +139,11 @@ contract Vpool is Context, Ownable {
         return _maxAnchor;
     }
 
-    function withdraw(uint256 amount) onlyOwner external {
+    function withdraw(uint256 amount) onlyOwner external returns (bool) {
         _anchor.transfer(_msgSender(), amount);
+
+        emit e_withdraw(amount);
+
+        return true;
     }
 }

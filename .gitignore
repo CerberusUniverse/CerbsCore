@@ -2,3 +2,7 @@
 node_modules/
 artifacts/
 cache/
+<<<<<<< HEAD
+.openzeppelin/
+=======
+>>>>>>> 0a13fbd49f9e70cd1cf1ec0042d61872ef3e8d86
