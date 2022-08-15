@@ -1,14 +1,14 @@
 //SPDX-License-Identifier: Unlicense
 
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.2;
 
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./interface/IMillionDogeClub.sol";
-import "./interface/ILevel.sol";
-import "./interface/IBerus.sol";
+import "./interfaces/IMillionDogeClub.sol";
+import "./interfaces/ILevel.sol";
+import "./interfaces/IBerus.sol";
 import "./owner/Manage.sol";
 import "./LevelEnum.sol";
 

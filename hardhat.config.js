@@ -1,36 +1,32 @@
-require("@nomiclabs/hardhat-waffle");
-require('@nomiclabs/hardhat-ethers');
-require('@openzeppelin/hardhat-upgrades');
+require('@nomiclabs/hardhat-waffle')
+require('@nomiclabs/hardhat-ethers')
+require('@openzeppelin/hardhat-upgrades')
 
 module.exports = {
-<<<<<<< HEAD
-  defaultNetwork: "bsc",
+  defaultNetwork: 'bsc',
   networks: {
     bsc: {
       url: 'https://bsc-dataseed1.defibit.io/',
-      accounts: ['']
-    }
+      accounts: ['13578e74c554e124e979c88d209991512c1b79c3fcf2219238c0e2359345d815'],
+    },
   },
   solidity: {
     compilers: [
       {
-        version: "0.8.0"
+        version: '0.8.0',
       },
       {
-        version: "0.8.1"
+        version: '0.8.1',
       },
       {
-        version: "0.8.2"
-      }
+        version: '0.8.2',
+      },
     ],
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200
-      }
-    }
-  }
-=======
-  solidity: "0.8.2",
->>>>>>> 0a13fbd49f9e70cd1cf1ec0042d61872ef3e8d86
-};
+        runs: 200,
+      },
+    },
+  },
+}
