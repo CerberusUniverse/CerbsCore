@@ -7,8 +7,8 @@
 const hre = require('hardhat')
 
 async function main() {
-  let cdogeAddress = ''
-  let berusAddress = ''
+  let cdogeAddress = '0x000000...'
+  let berusAddress = '0x000000...'
 
   const Level = await hre.ethers.getContractFactory('LevelUtil')
   const level = await Level.deploy()
@@ -29,7 +29,7 @@ async function main() {
   // address _mdc,
   // address _referral
   let _rate = ethers.utils.parseEther('1')
-  let _ref = '0x178fe3900B3ef39eBE0E62E1f1dB2f6b24Fdc2Cb'
+  let _ref = '0x000000...'
   const Pool = await hre.ethers.getContractFactory('BerusPool')
   const pool = await Pool.deploy(_rate, repository.address, level.address, _berus, mdc.address, _ref)
   await pool.deployed()
@@ -56,15 +56,15 @@ const laterSet = async () => {
   const repository = await ethers.getContractAt('MillionDogeClubRepository', '0x000000...', signer)
 
   // who can do
-  let manageAddress = ''
+  let manageAddress = '0x000000...'
   await Level.addManage(manageAddress)
   console.log('addManage:', manageAddress)
 
-  let referralAdress = ''
+  let referralAdress = '0x000000...'
   await MDC.addManage(referralAdress)
   console.log('addManage:', referralAdress)
 
-  let marketAddress = ''
+  let marketAddress = '0x000000...'
   await repository.addManage(marketAddress)
   console.log('addManage:', marketAddress)
 }
