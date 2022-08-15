@@ -19,7 +19,7 @@ async function main() {
   await mdc.deployed()
 
   const Repository = await hre.ethers.getContractFactory('MillionDogeClubRepository')
-  const repository = await Repository.deploy(_doge, _berus, mdc.address, level.address)
+  const repository = await Repository.deploy(cdogeAddress, berusAddress, mdc.address, level.address)
   await repository.deployed()
 
   // uint256 _rate,
@@ -31,7 +31,7 @@ async function main() {
   let _rate = ethers.utils.parseEther('1')
   let _ref = '0x000000...'
   const Pool = await hre.ethers.getContractFactory('BerusPool')
-  const pool = await Pool.deploy(_rate, repository.address, level.address, _berus, mdc.address, _ref)
+  const pool = await Pool.deploy(_rate, repository.address, level.address, berusAddress, mdc.address, _ref)
   await pool.deployed()
 
   console.log('level deployed to:', level.address)
