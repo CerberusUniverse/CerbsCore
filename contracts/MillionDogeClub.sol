@@ -20,7 +20,7 @@ contract MillionDogeClub is
 
     Counters.Counter private _tokenIds;
 
-    mapping(uint256 => uint256) photoId;
+    mapping(uint256 => uint256) public photoId;
 
     string public baseURI;
 
