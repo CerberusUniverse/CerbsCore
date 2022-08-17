@@ -1,14 +1,14 @@
 //SPDX-License-Identifier: Unlicense
 
-pragma solidity ^0.8.2;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-import "./interfaces/IMillionDogeClub.sol";
-import "./interfaces/ILevel.sol";
-import "./interfaces/IBerus.sol";
+import "./interface/IMillionDogeClub.sol";
+import "./interface/ILevel.sol";
+import "./interface/IBerus.sol";
 import "./owner/Manage.sol";
 import "./LevelEnum.sol";
 
@@ -38,6 +38,7 @@ contract MillionDogeClubRepository is Manage, ReentrancyGuard {
     event SetBaseDoge(address manage, uint256 _base);
     event SetBaseBerus(address manage, uint256 _base);
     event SetProperty(address _manage, uint256 _tokenId);
+    event UpdateProperty(address _manage, uint256 _tokenId);
     event DepositBerus(address _owner, uint256 _tokenId, uint256 _amount);
     event UpdateCdoge(uint256 _tokenId, uint256 _amount);
     event TacKBack(address recipient, uint256 amount, uint256 blocktime);
@@ -65,6 +66,18 @@ contract MillionDogeClubRepository is Manage, ReentrancyGuard {
     function setProperty(uint256 _tokenId) external onlyManage nonReentrant {
         emit SetProperty(msg.sender, _tokenId);
         property[_tokenId] = baseRepos();
+    }
+
+    /**
+     * update nft property
+     */
+    function updateProperty(uint256 _tokenId, Property calldata _pro)
+        external
+        onlyManage
+        nonReentrant
+    {
+        emit UpdateProperty(msg.sender, _tokenId);
+        property[_tokenId] = _pro;
     }
 
     /**
