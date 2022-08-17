@@ -1,6 +1,6 @@
 //SPDX-License-Identifier: Unlicense
 
-pragma solidity ^0.8.2;
+pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/security/Pausable.sol";
@@ -16,8 +16,11 @@ contract MillionDogeClub is
     Pausable
 {
     using Counters for Counters.Counter;
+    using Strings for uint256;
 
     Counters.Counter private _tokenIds;
+
+    mapping(uint256 => uint256) photoId;
 
     string public baseURI;
 
@@ -34,11 +37,32 @@ contract MillionDogeClub is
         emit SetBaseURI(baseURI_, msg.sender);
     }
 
-    function mint(address player) external onlyManage returns (uint256) {
+    function mint(address player, uint256 _photoId)
+        external
+        onlyManage
+        returns (uint256)
+    {
         _tokenIds.increment();
         uint256 id = _tokenIds.current();
+        photoId[id] = _photoId;
         _mint(player, id);
         return id;
+    }
+
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        virtual
+        override
+        returns (string memory)
+    {
+        _requireMinted(tokenId);
+
+        string memory base = _baseURI();
+        return
+            bytes(base).length > 0
+                ? string(abi.encodePacked(base, photoId[tokenId].toString()))
+                : "";
     }
 
     function burn(uint256 tokenId) external virtual {
